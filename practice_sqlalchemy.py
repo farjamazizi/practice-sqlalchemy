@@ -130,8 +130,22 @@ import sqlalchemy
 #     member_id = Column(Integer, primary_key= True)
 #     first_name = Column(String)
 #     Last_name = Column(String)
-#     room_id = Column(Integer, primary_key= True)
+#     room_id = Column(Integer, primary_key= True
 
+# SELECT * FROM author (sql m) =
+# results = session.query(Author).all()
+#
+# author_book_totals = (
+#     session.query(
+#         Author.first_name,
+#         Author.last_name,
+#         func.count(Book.title).label("book_total")
+#     )
+#     .join(Book)
+#     .group_by(Author.last_name)
+#     .order_by(desc("book_total"))
+#     .all()
+# )
 
 
 

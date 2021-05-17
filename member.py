@@ -9,4 +9,13 @@ class Member(Base):
     member_id = Column(Integer, primary_key= True)
     first_name = Column(String)
     Last_name = Column(String)
-    room_id = Column(Integer, primary_key= True)
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    user_name = Column(String, unique=True, nullable=False)
+    email = Column(String, unique=True, nullable=False)
+    password = Column(String)
+
+
+
+    def __repr__(self):
+        return "<Member(first_name = '%s', last_name = 's%')>" % (
+                                 self.first_name, self.last_name)
