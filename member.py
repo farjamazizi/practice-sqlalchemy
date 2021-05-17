@@ -4,7 +4,12 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Table, Text
 
 Base = declarative_base()
+
 engine = create_engine('sqlite:///:memory:', echo=True)
+
+Session = sessionmaker()
+Session.configure(bind=engine)
+session = Session()
 
 class Member(Base):
     __tablename__ = "member"
@@ -34,6 +39,9 @@ class Email(Base):
 
 Base.metadata.creat_all(engine)
 
+member1 = Member(first_name = "ali", last_name = "kalan", id = 1370, email = alikalan@gmail.com)
 
+session.add(member1)
+session.commit()
 
 
