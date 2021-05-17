@@ -21,7 +21,7 @@ class Member(Base):
     password = Column(String)
 
     def __repr__(self):
-        return "<User('%s','%s', '%s')>" % (self.first_name, self.last_name, self.password)
+        return "<Member('%s','%s', '%s')>" % (self.first_name, self.last_name, self.password)
 
 member1 = Member(
     first_name = 'ali',
