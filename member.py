@@ -44,4 +44,3 @@ sess.commit()
 member = sess.query(Member).filter(Member.id == 1).one_or_none()
 print(member.last_name)
 
-
