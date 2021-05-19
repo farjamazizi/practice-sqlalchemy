@@ -127,8 +127,8 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Python.dsad" />
       <item itemvalue="Python.main" />
+      <item itemvalue="Python.dsad" />
       <item itemvalue="Python.member" />
       <item itemvalue="Python.practice_sqlalchemy" />
     </list>
