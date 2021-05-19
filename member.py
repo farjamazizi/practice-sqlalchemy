@@ -1,13 +1,12 @@
 from sqlalchemy import Column, Integer, String
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import create_engine, MetaData
+from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-metadata = MetaData()
-Session = sessionmaker()
 
 engine = create_engine('sqlite:///:memory:', echo=True)
 
+Session = sessionmaker()
 Session.configure(bind=engine)
 sess = Session()
 
@@ -41,6 +40,9 @@ member1 = Member(
 sess.add(member1)
 sess.commit()
 
-member = sess.query(Member).filter(Member.id == 1).one_or_none()
+member = sess.query(Member) \
+    .filter(Member.id == 1) \
+    .one_or_none()
+
 print(member.last_name)
 
