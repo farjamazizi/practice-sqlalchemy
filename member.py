@@ -31,7 +31,6 @@ Base.metadata.create_all(engine)
 
 
 member1 = Member(
-    id=1,
     first_name='ali',
     last_name='kalan',
     user_name='ali.ka',
@@ -41,7 +40,7 @@ sess.add(member1)
 sess.commit()
 
 member = sess.query(Member) \
-    .filter(Member.id == 1) \
+    .filter(Member.user_name == 'ali.ka') \
     .one_or_none()
 
 print(member.last_name)
