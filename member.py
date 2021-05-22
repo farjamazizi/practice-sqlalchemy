@@ -19,7 +19,7 @@ class Member(Base):
     id = Column(Integer, primary_key=True, autoincrement=True)
     first_name = Column(String)
     last_name = Column(String)
-    user_name = Column(String, unique=True, nullable=False)
+    user_name = Column(String, unique=True)
     password = Column(String)
 
     def __repr__(self):
