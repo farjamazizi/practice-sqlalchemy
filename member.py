@@ -1,15 +1,14 @@
 from sqlalchemy import Column, Integer, String
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import create_engine, MetaData
+from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-metadata = MetaData()
-Session = sessionmaker()
 
 engine = create_engine('sqlite:///:memory:', echo=True)
 
+Session = sessionmaker()
 Session.configure(bind=engine)
-sess = Session()
+DBsession = Session()
 
 Base = declarative_base()
 
@@ -20,7 +19,7 @@ class Member(Base):
     id = Column(Integer, primary_key=True, autoincrement=True)
     first_name = Column(String)
     last_name = Column(String)
-    user_name = Column(String, unique=True, nullable=False)
+    user_name = Column(String, unique=True)
     password = Column(String)
 
     def __repr__(self):
@@ -32,15 +31,18 @@ Base.metadata.create_all(engine)
 
 
 member1 = Member(
-    id=1,
     first_name='ali',
     last_name='kalan',
     user_name='ali.ka',
     password='1370',
 )
-sess.add(member1)
-sess.commit()
+DBsession.add(member1)
+DBsession.commit()
 
-member = sess.query(Member).filter(Member.id == 1).one_or_none()
-print(member.last_name)
+added_member = DBsession.query(Member) \
+    .filter(Member.user_name == 'ali.ka') \
+    .one_or_none()
+
+print(added_member.last_name)
+
 
