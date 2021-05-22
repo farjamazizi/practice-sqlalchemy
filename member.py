@@ -8,7 +8,7 @@ engine = create_engine('sqlite:///:memory:', echo=True)
 
 Session = sessionmaker()
 Session.configure(bind=engine)
-sess = Session()
+session = Session()
 
 Base = declarative_base()
 
@@ -36,12 +36,13 @@ member1 = Member(
     user_name='ali.ka',
     password='1370',
 )
-sess.add(member1)
-sess.commit()
+session.add(member1)
+session.commit()
 
-member = sess.query(Member) \
+member = session.query(Member) \
     .filter(Member.user_name == 'ali.ka') \
     .one_or_none()
 
 print(member.last_name)
+
 
