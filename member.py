@@ -31,36 +31,36 @@ Base.metadata.create_all(engine)
 
 
 member1 = Member(
-    first_name='ali',
-    last_name='kalan',
-    user_name='ali.ka',
+    first_name='firstname 1',
+    last_name='lastname 1',
+    user_name='usermember 1',
     password='1370',
 )
 
 DBsession.add(member1)
 
 member2 = Member(
-    first_name='himan',
-    last_name='falahi',
-    user_name='himan.falah',
+    first_name='firstname 2',
+    last_name='lastname 2',
+    user_name='usermember 2',
     password='1375',
 )
 
 DBsession.add(member2)
 
 member3 = Member(
-    first_name='mohammad',
-    last_name='sheykhiyan',
-    user_name='mohammad.sheykh',
+    first_name='firstname 3',
+    last_name='lastname 3',
+    user_name='usermember 3',
     password='1369',
 )
 
 DBsession.add(member3)
 
 member4 = Member(
-    first_name='mina',
-    last_name='minai',
-    user_name='mina.ka',
+    first_name='firstname 4',
+    last_name='lastname 4',
+    user_name='usermember 4',
     password='1374',
 )
 
@@ -68,7 +68,7 @@ DBsession.add(member4)
 DBsession.commit()
 
 added_member = DBsession.query(Member) \
-    .filter(Member.user_name == 'ali.ka') \
+    .filter(Member.user_name == 'usermember 1') \
     .one_or_none()
 
 print(added_member.last_name)
@@ -86,8 +86,8 @@ added_of_members_ordered_by_names = DBsession.query(Member) \
 for member in added_of_members_ordered_by_names:
     print(member.user_name)
 
-record = DBsession.query(Member.password) \
-    .filter(Member.last_name == 'falahi') \
+record = DBsession.query(Member) \
+    .filter(Member.first_name == Member.password) \
     .first()
 
 print(record)
@@ -98,7 +98,7 @@ count_of_member = DBsession.query(Member) \
 print(count_of_member)
 
 count_of_member_filtered = DBsession.query(Member) \
-    .filter(Member.first_name == 'mohammad') \
+    .filter(Member.first_name == 'firstname 4') \
     .count()
 
 print(count_of_member_filtered)
