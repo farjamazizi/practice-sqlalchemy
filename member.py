@@ -68,7 +68,7 @@ added_member = DBsession.query(Member) \
 
 print(added_member.last_name)
 
-added_all_members = DBsession.query(Member)
+added_all_members = DBsession.query(Member) \
 
 for member in added_all_members:
     print(member.user_name, member.last_name)
@@ -86,7 +86,7 @@ added_count_member = DBsession.query(func.count(Member.last_name)) \
     .group_by(Member.user_name)
 print(added_count_member)
 
-order_count = DBsession.query(Member).count()
+order_count = DBsession.query(Member).count() \
 
 print(order_count)
 
