@@ -5,7 +5,6 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy import func
 
 
-
 engine = create_engine('sqlite:///:memory:', echo=True)
 
 Session = sessionmaker()
@@ -83,22 +82,23 @@ for member in list_of_members:
 
 added_of_members_ordered_by_names = DBsession.query(Member) \
     .order_by(Member.user_name) \
-    .all() \
+    .all()
 
 for member in added_of_members_ordered_by_names:
     print(member.user_name)
 
 added_one_of_their_member_list = DBsession.query(Member) \
     .filter(Member.user_name == 'mohammad.sheykh') \
-    .first() \
+    .first()
 
 added_one_of_their_member_list = DBsession.query(func.count(Member.last_name)) \
-    .group_by(Member.user_name) \
+    .group_by(Member.user_name)
 
 print(added_one_of_their_member_list)
 
-order_count = DBsession.query(Member) \
-   .count() \
+order_count_of_member = DBsession.query(Member) \
+   .count()
 
-print(order_count)
+print(order_count_of_member)
+
 
