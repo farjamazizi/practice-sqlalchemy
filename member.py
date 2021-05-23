@@ -2,7 +2,6 @@ from sqlalchemy import Column, Integer, String
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from sqlalchemy import func
 
 
 engine = create_engine('sqlite:///:memory:', echo=True)
@@ -87,18 +86,20 @@ added_of_members_ordered_by_names = DBsession.query(Member) \
 for member in added_of_members_ordered_by_names:
     print(member.user_name)
 
-added_one_of_their_member_list = DBsession.query(Member) \
+query_member = DBsession.query(Member.last_name) \
     .filter(Member.user_name == 'mohammad.sheykh') \
     .first()
 
-added_one_of_their_member_list = DBsession.query(func.count(Member.last_name)) \
-    .group_by(Member.user_name)
+print(query_member)
 
-print(added_one_of_their_member_list)
-
-order_count_of_member = DBsession.query(Member) \
+count_of_member = DBsession.query(Member) \
    .count()
 
-print(order_count_of_member)
+print(count_of_member)
 
+count_of_member_filtered = DBsession.query(Member) \
+    .filter(Member.first_name == 'mohammad') \
+    .count()
+
+print(count_of_member_filtered)
 
