@@ -86,11 +86,11 @@ added_of_members_ordered_by_names = DBsession.query(Member) \
 for member in added_of_members_ordered_by_names:
     print(member.user_name)
 
-query_member = DBsession.query(Member.last_name) \
-    .filter(Member.user_name == 'mohammad.sheykh') \
+record = DBsession.query(Member.password) \
+    .filter(Member.last_name == 'falahi') \
     .first()
 
-print(query_member)
+print(record)
 
 count_of_member = DBsession.query(Member) \
    .count()
