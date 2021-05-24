@@ -60,7 +60,7 @@ DBsession.add(member3)
 member4 = Member(
     first_name='firstname 4',
     last_name='lastname 4',
-    user_name='usermember 4',
+    user_name='firstname 4lastname 4',
     password='1374',
 )
 
@@ -87,7 +87,7 @@ for member in added_of_members_ordered_by_names:
     print(member.user_name)
 
 record = DBsession.query(Member) \
-    .filter(Member.first_name == Member.password) \
+    .filter(Member.user_name == Member.first_name + Member.last_name) \
     .first()
 
 print(record)
