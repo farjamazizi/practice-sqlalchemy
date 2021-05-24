@@ -33,7 +33,7 @@ Base.metadata.create_all(engine)
 member1 = Member(
     first_name='firstname 1',
     last_name='lastname 1',
-    user_name='usermember 1',
+    user_name='username 1',
     password='1370',
 )
 
@@ -42,7 +42,7 @@ DBsession.add(member1)
 member2 = Member(
     first_name='firstname 2',
     last_name='lastname 2',
-    user_name='usermember 2',
+    user_name='username 2',
     password='1375',
 )
 
@@ -51,7 +51,7 @@ DBsession.add(member2)
 member3 = Member(
     first_name='firstname 3',
     last_name='lastname 3',
-    user_name='usermember 3',
+    user_name='username 3',
     password='1369',
 )
 
@@ -87,7 +87,7 @@ for member in added_of_members_ordered_by_names:
     print(member.user_name)
 
 record = DBsession.query(Member) \
-    .filter(Member.user_name == Member.first_name + Member.last_name) \
+    .filter(Member.user_name == member4.first_name + member4.last_name) \
     .first()
 
 print(record)
