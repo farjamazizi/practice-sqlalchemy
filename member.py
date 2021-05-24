@@ -68,7 +68,7 @@ DBsession.add(member4)
 DBsession.commit()
 
 added_member = DBsession.query(Member) \
-    .filter(Member.user_name == 'usermember 1') \
+    .filter(Member.user_name == member1.user_name) \
     .one_or_none()
 
 print(added_member.last_name)
@@ -98,7 +98,7 @@ count_of_member = DBsession.query(Member) \
 print(count_of_member)
 
 count_of_member_filtered = DBsession.query(Member) \
-    .filter(Member.first_name == 'firstname 4') \
+    .filter(Member.first_name == member4.first_name) \
     .count()
 
 print(count_of_member_filtered)
