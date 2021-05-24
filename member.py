@@ -73,8 +73,7 @@ added_member = DBsession.query(Member) \
 
 print(added_member.last_name)
 
-list_of_members = DBsession.query(Member) \
-    .all()
+list_of_members = DBsession.query(Member)
 
 for member in list_of_members:
     print(member.user_name, member.last_name)
