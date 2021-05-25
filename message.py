@@ -17,14 +17,14 @@ class Message(Base):
     __tablename__ = 'message'
 
     id = Column(Integer, primary_key=True, autoincrement=True)
-    text = Column(Text, String, default='')
+    text = Column(Text, default='')
 
     def __repr__(self):
         return "<Message('%s')" % \
                (self.text)
 
 
-Base.metadata.creat_all(engine)
+Base.metadata.create_all(engine)
 
 
 message1 = Message(
