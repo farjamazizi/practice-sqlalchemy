@@ -22,7 +22,7 @@ class Member(Base):
     last_name = Column(String)
     user_name = Column(String, unique=True)
     password = Column(String)
-    messages = relationship('Message', backref='sender_id')
+    messages = relationship('Message', backref='sender')
 
     def __repr__(self):
         return "<Member('%s','%s', '%s', '%s')>" % \
