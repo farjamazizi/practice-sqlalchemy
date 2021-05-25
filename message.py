@@ -28,8 +28,7 @@ Base.metadata.creat_all(engine)
 
 
 message1 = Message(
-    id == 1,
-    text = 'Hello world',
+    text='Hello world',
 )
 
 DBsession.add(message1)
