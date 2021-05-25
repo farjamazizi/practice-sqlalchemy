@@ -19,22 +19,25 @@ class Message(Base):
 
     id = Column(Integer, primary_key=True, autoincrement=True)
     text = Column(Text, default='')
-    member_id =Column(Integer, ForeignKey('member.id'))
-    member = relationship('Member', back_populates='messages')
+    owner_id =Column(Integer, ForeignKey('member.id'))
+    owner = relationship(
+        'Member',
+        back_populates='messages'
+    )
 
-    def __repr__(self):
-        return "<Message('%s')" % \
-               (self.text)
+    # def __repr__(self):
+    #     return "<Message('%s')" % \
+    #            (self.text)
 
 
-Base.metadata.create_all(engine)
+# Base.metadata.create_all(engine)
 
 
-message1 = Message(
-    text='Hello world',
-)
+# message1 = Message(
+#     text='Hello world',
+# )
 
-DBsession.add(message1)
-DBsession.commit()
+# DBsession.add(message1)
+# DBsession.commit()
 
 
