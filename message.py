@@ -1,7 +1,8 @@
-from sqlalchemy import Column, String, Integer, Text
+from sqlalchemy import Column, String, Integer, Text, ForeignKey
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import relationship, backref
 
 
 engine = create_engine('sqlite:///:memory:', echo=True)
@@ -18,6 +19,7 @@ class Message(Base):
 
     id = Column(Integer, primary_key=True, autoincrement=True)
     text = Column(Text, default='')
+    sender_id = Column(Integer, ForeignKey('member.id'))
 
     def __repr__(self):
         return "<Message('%s')" % \

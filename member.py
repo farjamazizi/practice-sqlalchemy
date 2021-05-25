@@ -2,6 +2,7 @@ from sqlalchemy import Column, Integer, String
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import relationship, backref
 
 
 engine = create_engine('sqlite:///:memory:', echo=True)
@@ -21,6 +22,7 @@ class Member(Base):
     last_name = Column(String)
     user_name = Column(String, unique=True)
     password = Column(String)
+    messages = relationship('Message', backref='sender_id')
 
     def __repr__(self):
         return "<Member('%s','%s', '%s', '%s')>" % \
