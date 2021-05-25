@@ -16,7 +16,7 @@ Base = declarative_base()
 class Message(Base):
     __tablename__ = 'message'
 
-    id = Column(Integer, primary_key= True)
+    id = Column(Integer, primary_key=True, autoincrement=True)
     text = Column(Text, String, default='')
 
     def __repr__(self):
@@ -29,7 +29,7 @@ Base.metadata.creat_all(engine)
 
 message1 = Message(
     id == 1,
-    Text = 'Hello world'
+    text = 'Hello world',
 )
 
 DBsession.add(message1)
