@@ -1,4 +1,5 @@
-from sqlalchemy import Column, Integer, String, Text, ForeignKey
+from sqlalchemy import Column, Integer, String, Text, ForeignKey, \
+    func, select
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
@@ -137,15 +138,32 @@ message2 = Message(
 DBsession.add(message2)
 DBsession.commit()
 
-member5 = Member(
-    messages=[message2,],
-    first_name='firstname 5',
-    last_name='lastname 5',
-    user_name='username5',
-    password='1111',
+message3 = Message(
+    text = 'Hello pycharm'
 )
 
-DBsession.add(member5)
+DBsession.add(message3)
 DBsession.commit()
 
+member1.messages=[message1, message2, message3]
 
+print(member1.messages)
+
+member2.messages=[message1, message2]
+
+print(member2.messages)
+
+count_of_message = DBsession.query(Message) \
+   .count()
+
+print(count_of_message)
+
+added_member_message=DBsession.query(func.count(Member.messages))
+
+print(added_member_message)
+
+for message1 in added_of_members_ordered_by_names:
+    print(message1.user_name)
+
+
+    
