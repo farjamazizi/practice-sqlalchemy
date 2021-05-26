@@ -130,3 +130,22 @@ message1 = Message(
 DBsession.add(message1)
 DBsession.commit()
 
+message2 = Message(
+    text = 'Hello python'
+)
+
+DBsession.add(message2)
+DBsession.commit()
+
+member5 = Member(
+    messages=[message2,],
+    first_name='firstname 5',
+    last_name='lastname 5',
+    user_name='username5',
+    password='1111',
+)
+
+DBsession.add(member5)
+DBsession.commit()
+
+
