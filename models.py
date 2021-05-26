@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String
+from sqlalchemy import Column, Integer, String, Text, ForeignKey
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
@@ -25,12 +25,25 @@ class Member(Base):
 
     messages = relationship(
         "Message",
-        back_populates='owner'
+        back_populates='sender'
     )
 
     def __repr__(self):
         return "<Member('%s','%s', '%s', '%s')>" % \
                (self.first_name, self.last_name, self.user_name, self.password)
+
+
+class Message(Base):
+    __tablename__ = 'message'
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    text = Column(Text, default='')
+    sneder_id = Column(Integer, ForeignKey('member.id'))
+
+    sender = relationship(
+        'Member',
+        back_populates='messages'
+    )
 
 
 Base.metadata.create_all(engine)
@@ -108,4 +121,12 @@ count_of_member_filtered = DBsession.query(Member) \
 
 print(count_of_member_filtered)
 
+# messages query
+
+message1 = Message(
+     text='Hello world',
+)
+
+DBsession.add(message1)
+DBsession.commit()
 
