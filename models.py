@@ -1,5 +1,5 @@
-from sqlalchemy import Column, Integer, String, Text, ForeignKey, \
-    func, select
+from sqlalchemy import Column, Integer, String, Text, ForeignKey,\
+    select
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
@@ -129,27 +129,46 @@ message1 = Message(
 )
 
 DBsession.add(message1)
-DBsession.commit()
 
 message2 = Message(
     text = 'Hello python'
 )
 
 DBsession.add(message2)
-DBsession.commit()
 
 message3 = Message(
     text = 'Hello pycharm'
 )
 
 DBsession.add(message3)
+
+message4 = Message(
+    text = 'abcd'
+)
+DBsession.add(message4)
+
+message5 = Message(
+    text = 'efj'
+)
+
+DBsession.add(message5)
+
+member5 = Member(
+    first_name='firstname 5',
+    last_name='lastname 5',
+    user_name='username5',
+    password='1390',
+    messages=[message4, message5,]
+)
+
+DBsession.add(member5)
 DBsession.commit()
 
-member1.messages=[message1, message2, message3]
+member1.messages=[message1,]
 
 print(member1.messages)
 
-member2.messages=[message1, message2]
+member2.messages=[message2, message3,]
 
 print(member2.messages)
 
@@ -158,12 +177,14 @@ count_of_message = DBsession.query(Message) \
 
 print(count_of_message)
 
-added_member_message=DBsession.query(func.count(Member.messages))
+added_member_message=DBsession.query(Member)  \
+    .filter(member5.messages==[message4, message5,]) \
+    .first()
 
 print(added_member_message)
 
-for message1 in added_of_members_ordered_by_names:
-    print(message1.user_name)
+oneitem = DBsession.query(Message)\
+    .filter_by(text = 'Hello pycharm')\
+    .first()
+print(oneitem)
 
-
-    
