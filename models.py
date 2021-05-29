@@ -1,5 +1,5 @@
 from sqlalchemy import Column, Integer, String, Text, ForeignKey,\
-    select
+    func
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
@@ -39,7 +39,7 @@ class Message(Base):
 
     id = Column(Integer, primary_key=True, autoincrement=True)
     text = Column(Text, default='')
-    sneder_id = Column(Integer, ForeignKey('member.id'))
+    sender_id = Column(Integer, ForeignKey('member.id'))
 
     sender = relationship(
         'Member',
@@ -158,17 +158,17 @@ member5 = Member(
     last_name='lastname 5',
     user_name='username5',
     password='1390',
-    messages=[message4, message5,]
+    messages=[message4, message5]
 )
 
 DBsession.add(member5)
 DBsession.commit()
 
-member1.messages=[message1,]
+member1.messages=[message1]
 
 print(member1.messages)
 
-member2.messages=[message2, message3,]
+member2.messages=[message2, message3]
 
 print(member2.messages)
 
@@ -178,7 +178,7 @@ count_of_message = DBsession.query(Message) \
 print(count_of_message)
 
 added_member_message=DBsession.query(Member)  \
-    .filter(member5.messages==[message4, message5,]) \
+    .filter(member5.messages==[message4, message5]) \
     .first()
 
 print(added_member_message)
@@ -187,4 +187,17 @@ oneitem = DBsession.query(Message)\
     .filter_by(text = 'Hello pycharm')\
     .first()
 print(oneitem)
+another_item =DBsession.query(Member) \
+    .order_by(Member.messages)
+
+print(another_item)
+
+added_message_item = DBsession.query(Member) \
+    .filter(Member.id == message5.sender_id)
+print(added_message_item)
+
+added_member_item = DBsession.query(Message)\
+    .filter(Message.sender_id == member5.id)\
+    .count()
+print(added_member_item)
 
