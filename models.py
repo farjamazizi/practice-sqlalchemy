@@ -194,12 +194,6 @@ count_of_message = DBsession.query(Message) \
 
 print(count_of_message)
 
-added_member_message=DBsession.query(Member)  \
-    .filter(member5.messages==[message4, message5]) \
-    .first()
-
-print(added_member_message)
-
 added_message_text = DBsession.query(Message)\
     .filter_by(text = 'Hello pycharm')\
     .first()
