@@ -216,15 +216,15 @@ member_of_message = DBsession.query(Member) \
 
 print(member_of_message)
 
-message_of_member = DBsession.query(Message)\
+count_message_of_member5 = DBsession.query(Message)\
     .filter(Message.sender_id == member5.id)\
     .count()
 
-print(message_of_member)
+print(count_message_of_member5)
 
-another_message_of_member = DBsession.query(Message)\
+count_message_of_member6 = DBsession.query(Message)\
     .filter(Message.sender_id == member6.id)\
     .count()
 
-print(another_message_of_member)
+print(count_message_of_member6)
 
