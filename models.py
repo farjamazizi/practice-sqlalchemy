@@ -102,6 +102,7 @@ added_of_members_ordered_by_names = DBsession.query(Member) \
     .all()
 
 for member in added_of_members_ordered_by_names:
+
     print(member.user_name)
 
 record = DBsession.query(Member) \
@@ -142,15 +143,22 @@ message3 = Message(
 DBsession.add(message3)
 
 message4 = Message(
-    text = 'abcd'
+    text = 'notebook'
 )
+
 DBsession.add(message4)
 
 message5 = Message(
-    text = 'efj'
+    text = 'pencil'
 )
 
 DBsession.add(message5)
+
+message6 = Message(
+    text = 'book'
+)
+
+DBsession.add(message6)
 
 member5 = Member(
     first_name='firstname 5',
@@ -161,6 +169,16 @@ member5 = Member(
 )
 
 DBsession.add(member5)
+
+member6 = Member(
+    first_name='firstname 6',
+    last_name='lastname 6',
+    user_name='username6',
+    password='1396',
+    messages=[message6]
+)
+
+DBsession.add(member6)
 DBsession.commit()
 
 member1.messages=[message1]
@@ -182,22 +200,31 @@ added_member_message=DBsession.query(Member)  \
 
 print(added_member_message)
 
-oneitem = DBsession.query(Message)\
+added_message_text = DBsession.query(Message)\
     .filter_by(text = 'Hello pycharm')\
     .first()
-print(oneitem)
-another_item =DBsession.query(Member) \
+
+print(added_message_text)
+
+ordered_member_by_message =DBsession.query(Member) \
     .order_by(Member.messages)
 
-print(another_item)
+print(ordered_member_by_message)
 
-added_message_item = DBsession.query(Member) \
+member_of_message = DBsession.query(Member) \
     .filter(Member.id == message5.sender_id)
-print(added_message_item)
 
-added_member_item = DBsession.query(Message)\
+print(member_of_message)
+
+message_of_member = DBsession.query(Message)\
     .filter(Message.sender_id == member5.id)\
     .count()
-print(added_member_item)
 
+print(message_of_member)
+
+another_message_of_member = DBsession.query(Message)\
+    .filter(Message.sender_id == member6.id)\
+    .count()
+
+print(another_message_of_member)
 
