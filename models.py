@@ -37,7 +37,7 @@ class Message(Base):
     __tablename__ = 'message'
 
     id = Column(Integer, primary_key=True, autoincrement=True)
-    text = Column(Text, default='')
+    text = Column(Text)
     sender_id = Column(Integer, ForeignKey('member.id'))
 
     sender = relationship(
@@ -56,7 +56,12 @@ member1 = Member(
     password='1370',
 )
 
+message1 = Message(
+     text='Hello world',
+)
+
 DBsession.add(member1)
+DBsession.add(message1)
 
 member2 = Member(
     first_name='firstname 2',
@@ -65,7 +70,17 @@ member2 = Member(
     password='1375',
 )
 
+message2 = Message(
+    text = 'Hello python'
+)
+
+message3 = Message(
+    text = 'Hello pycharm'
+)
+
 DBsession.add(member2)
+DBsession.add(message2)
+DBsession.add(message3)
 
 member3 = Member(
     first_name='firstname 3',
@@ -84,6 +99,38 @@ member4 = Member(
 )
 
 DBsession.add(member4)
+
+member5 = Member(
+    first_name='firstname 5',
+    last_name='lastname 5',
+    user_name='username5',
+    password='1390',
+)
+
+message4 = Message(
+    text = 'notebook'
+)
+
+message5 = Message(
+    text = 'pencil'
+)
+
+DBsession.add(member5)
+DBsession.add(message4)
+DBsession.add(message5)
+
+member6 = Member(
+    first_name='firstname 6',
+    last_name='lastname 6',
+    user_name='username6',
+    password='1396',
+)
+
+message6 = Message(
+    text = 'book'
+)
+
+DBsession.add(message6)
 DBsession.commit()
 
 added_member = DBsession.query(Member) \
@@ -122,65 +169,6 @@ count_of_member_filtered = DBsession.query(Member) \
 
 print(count_of_member_filtered)
 
-# messages query
-
-message1 = Message(
-     text='Hello world',
-)
-
-DBsession.add(message1)
-
-message2 = Message(
-    text = 'Hello python'
-)
-
-DBsession.add(message2)
-
-message3 = Message(
-    text = 'Hello pycharm'
-)
-
-DBsession.add(message3)
-
-message4 = Message(
-    text = 'notebook'
-)
-
-DBsession.add(message4)
-
-message5 = Message(
-    text = 'pencil'
-)
-
-DBsession.add(message5)
-
-message6 = Message(
-    text = 'book'
-)
-
-DBsession.add(message6)
-
-member5 = Member(
-    first_name='firstname 5',
-    last_name='lastname 5',
-    user_name='username5',
-    password='1390',
-    messages=[message4, message5]
-)
-
-DBsession.add(member5)
-
-member6 = Member(
-    first_name='firstname 6',
-    last_name='lastname 6',
-    user_name='username6',
-    password='1396',
-    messages=[message6]
-)
-
-DBsession.add(member6)
-DBsession.commit()
-
 member1.messages=[message1]
 
 print(member1.messages)
@@ -188,6 +176,14 @@ print(member1.messages)
 member2.messages=[message2, message3]
 
 print(member2.messages)
+
+member5.messages=[message4, message5]
+
+print(member5.messages)
+
+member6.messages=[message6]
+
+print(member6.messages)
 
 count_of_message = DBsession.query(Message) \
    .count()
@@ -199,11 +195,6 @@ added_message_text = DBsession.query(Message)\
     .first()
 
 print(added_message_text)
-
-ordered_member_by_message =DBsession.query(Member) \
-    .order_by(Member.messages)
-
-print(ordered_member_by_message)
 
 member_of_message = DBsession.query(Member) \
     .filter(Member.id == message5.sender_id)
