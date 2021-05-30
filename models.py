@@ -197,7 +197,6 @@ added_of_members_ordered_by_names = DBsession.query(Member) \
     .all()
 
 for member in added_of_members_ordered_by_names:
-
     print(member.user_name)
 
 record = DBsession.query(Member) \
