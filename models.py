@@ -189,26 +189,26 @@ count_of_message = DBsession.query(Message) \
 
 print(count_of_message)
 
-added_message_text = DBsession.query(Message)\
-    .filter_by(text = 'Hello pycharm')\
+added_message_text = DBsession.query(Message) \
+    .filter_by(text = 'Hello pycharm') \
     .first()
 
 print(added_message_text)
 
 member_of_message = DBsession.query(Member) \
-    .filter(Member.id == message5.sender_id)\
+    .filter(Member.id == message5.sender_id) \
     .one_or_none()
 
 print(member_of_message)
 
-count_message_of_member5 = DBsession.query(Message)\
-    .filter(Message.sender_id == member5.id)\
+count_message_of_member5 = DBsession.query(Message) \
+    .filter(Message.sender_id == member5.id) \
     .count()
 
 print(count_message_of_member5)
 
-count_message_of_member6 = DBsession.query(Message)\
-    .filter(Message.sender_id == member6.id)\
+count_message_of_member6 = DBsession.query(Message) \
+    .filter(Message.sender_id == member6.id) \
     .count()
 
 print(count_message_of_member6)
