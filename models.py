@@ -127,21 +127,21 @@ message3 = Message(
 DBsession.add(message3)
 
 message4 = Message(
-    text = 'notebook',
+    text='notebook',
     sender_id=member5.id,
 )
 
 DBsession.add(message4)
 
 message5 = Message(
-    text = 'pencil',
+    text='pencil',
     sender_id=member5.id,
 )
 
 DBsession.add(message5)
 
 message6 = Message(
-    text = 'book',
+    text='book',
     sender_id=member6.id,
 )
 
