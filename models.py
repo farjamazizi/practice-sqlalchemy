@@ -1,7 +1,8 @@
-from sqlalchemy import Column, Integer, String
+from sqlalchemy import Column, Integer, String, Text, ForeignKey
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import relationship
 
 
 engine = create_engine('sqlite:///:memory:', echo=True)
@@ -22,9 +23,27 @@ class Member(Base):
     user_name = Column(String, unique=True)
     password = Column(String)
 
+    messages = relationship(
+        "Message",
+        back_populates='sender'
+    )
+
     def __repr__(self):
         return "<Member('%s','%s', '%s', '%s')>" % \
                (self.first_name, self.last_name, self.user_name, self.password)
+
+
+class Message(Base):
+    __tablename__ = 'message'
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    text = Column(Text)
+    sender_id = Column(Integer, ForeignKey('member.id'))
+
+    sender = relationship(
+        'Member',
+        back_populates='messages'
+    )
 
 
 Base.metadata.create_all(engine)
@@ -65,6 +84,68 @@ member4 = Member(
 )
 
 DBsession.add(member4)
+
+member5 = Member(
+    first_name='firstname 5',
+    last_name='lastname 5',
+    user_name='username5',
+    password='1390',
+)
+
+DBsession.add(member5)
+
+member6 = Member(
+    first_name='firstname 6',
+    last_name='lastname 6',
+    user_name='username6',
+    password='1396',
+)
+
+DBsession.add(member6)
+
+# messages query
+
+message1 = Message(
+     text='Hello world',
+     sender_id=member1.id,
+)
+
+DBsession.add(message1)
+
+message2 = Message(
+    text='Hello python',
+    sender_id=member2.id,
+)
+
+DBsession.add(message2)
+
+message3 = Message(
+    text='Hello pycharm',
+    sender_id=member2.id,
+)
+
+DBsession.add(message3)
+
+message4 = Message(
+    text='notebook',
+    sender_id=member5.id,
+)
+
+DBsession.add(message4)
+
+message5 = Message(
+    text='pencil',
+    sender_id=member5.id,
+)
+
+DBsession.add(message5)
+
+message6 = Message(
+    text='book',
+    sender_id=member6.id,
+)
+
+DBsession.add(message6)
 DBsession.commit()
 
 added_member = DBsession.query(Member) \
@@ -83,6 +164,7 @@ added_of_members_ordered_by_names = DBsession.query(Member) \
     .all()
 
 for member in added_of_members_ordered_by_names:
+
     print(member.user_name)
 
 record = DBsession.query(Member) \
@@ -102,4 +184,32 @@ count_of_member_filtered = DBsession.query(Member) \
 
 print(count_of_member_filtered)
 
+count_of_message = DBsession.query(Message) \
+   .count()
+
+print(count_of_message)
+
+added_message_text = DBsession.query(Message) \
+    .filter_by(text = 'Hello pycharm') \
+    .first()
+
+print(added_message_text)
+
+member_of_message = DBsession.query(Member) \
+    .filter(Member.id == message5.sender_id) \
+    .one_or_none()
+
+print(member_of_message)
+
+count_message_of_member5 = DBsession.query(Message) \
+    .filter(Message.sender_id == member5.id) \
+    .count()
+
+print(count_message_of_member5)
+
+count_message_of_member6 = DBsession.query(Message) \
+    .filter(Message.sender_id == member6.id) \
+    .count()
+
+print(count_message_of_member6)
 
