@@ -58,6 +58,7 @@ member1 = Member(
 
 message1 = Message(
      text='Hello world',
+    sender_id=member1.id
 )
 
 DBsession.add(member1)
@@ -71,11 +72,13 @@ member2 = Member(
 )
 
 message2 = Message(
-    text = 'Hello python'
+    text='Hello python',
+    sender_id=member2.id
 )
 
 message3 = Message(
-    text = 'Hello pycharm'
+    text='Hello pycharm',
+    sender_id=member2.id
 )
 
 DBsession.add(member2)
@@ -108,11 +111,13 @@ member5 = Member(
 )
 
 message4 = Message(
-    text = 'notebook'
+    text = 'notebook',
+    sender_id=member5.id
 )
 
 message5 = Message(
-    text = 'pencil'
+    text = 'pencil',
+    sender_id=member5.id
 )
 
 DBsession.add(member5)
@@ -127,7 +132,8 @@ member6 = Member(
 )
 
 message6 = Message(
-    text = 'book'
+    text = 'book',
+    sender_id=member6.id
 )
 
 DBsession.add(message6)
@@ -168,22 +174,6 @@ count_of_member_filtered = DBsession.query(Member) \
     .count()
 
 print(count_of_member_filtered)
-
-member1.messages=[message1]
-
-print(member1.messages)
-
-member2.messages=[message2, message3]
-
-print(member2.messages)
-
-member5.messages=[message4, message5]
-
-print(member5.messages)
-
-member6.messages=[message6]
-
-print(member6.messages)
 
 count_of_message = DBsession.query(Message) \
    .count()
