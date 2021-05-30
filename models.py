@@ -197,7 +197,7 @@ print(added_message_text)
 
 member_of_message = DBsession.query(Member) \
     .filter(Member.id == message5.sender_id)\
-    .first()
+    .one_or_none()
 
 print(member_of_message)
 
