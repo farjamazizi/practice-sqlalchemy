@@ -103,45 +103,46 @@ member6 = Member(
 
 DBsession.add(member6)
 
+# messages query
+
 message1 = Message(
      text='Hello world',
-     sender_id=member1.id
-
+     sender_id=member1.id,
 )
 
 DBsession.add(message1)
 
 message2 = Message(
     text='Hello python',
-    sender_id=member2.id
+    sender_id=member2.id,
 )
 
 DBsession.add(message2)
 
 message3 = Message(
     text='Hello pycharm',
-    sender_id=member2.id
+    sender_id=member2.id,
 )
 
 DBsession.add(message3)
 
 message4 = Message(
     text = 'notebook',
-    sender_id=member5.id
+    sender_id=member5.id,
 )
 
 DBsession.add(message4)
 
 message5 = Message(
     text = 'pencil',
-    sender_id=member5.id
+    sender_id=member5.id,
 )
 
 DBsession.add(message5)
 
 message6 = Message(
     text = 'book',
-    sender_id=member6.id
+    sender_id=member6.id,
 )
 
 DBsession.add(message6)
@@ -195,7 +196,8 @@ added_message_text = DBsession.query(Message)\
 print(added_message_text)
 
 member_of_message = DBsession.query(Member) \
-    .filter(Member.id == message5.sender_id)
+    .filter(Member.id == message5.sender_id)\
+    .first()
 
 print(member_of_message)
 
