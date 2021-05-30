@@ -56,14 +56,7 @@ member1 = Member(
     password='1370',
 )
 
-message1 = Message(
-     text='Hello world',
-     sender_id=member1.id
-
-)
-
 DBsession.add(member1)
-DBsession.add(message1)
 
 member2 = Member(
     first_name='firstname 2',
@@ -72,19 +65,7 @@ member2 = Member(
     password='1375',
 )
 
-message2 = Message(
-    text='Hello python',
-    sender_id=member2.id
-)
-
-message3 = Message(
-    text='Hello pycharm',
-    sender_id=member2.id
-)
-
 DBsession.add(member2)
-DBsession.add(message2)
-DBsession.add(message3)
 
 member3 = Member(
     first_name='firstname 3',
@@ -111,19 +92,7 @@ member5 = Member(
     password='1390',
 )
 
-message4 = Message(
-    text = 'notebook',
-    sender_id=member5.id
-)
-
-message5 = Message(
-    text = 'pencil',
-    sender_id=member5.id
-)
-
 DBsession.add(member5)
-DBsession.add(message4)
-DBsession.add(message5)
 
 member6 = Member(
     first_name='firstname 6',
@@ -131,6 +100,44 @@ member6 = Member(
     user_name='username6',
     password='1396',
 )
+
+DBsession.add(member6)
+
+message1 = Message(
+     text='Hello world',
+     sender_id=member1.id
+
+)
+
+DBsession.add(message1)
+
+message2 = Message(
+    text='Hello python',
+    sender_id=member2.id
+)
+
+DBsession.add(message2)
+
+message3 = Message(
+    text='Hello pycharm',
+    sender_id=member2.id
+)
+
+DBsession.add(message3)
+
+message4 = Message(
+    text = 'notebook',
+    sender_id=member5.id
+)
+
+DBsession.add(message4)
+
+message5 = Message(
+    text = 'pencil',
+    sender_id=member5.id
+)
+
+DBsession.add(message5)
 
 message6 = Message(
     text = 'book',
