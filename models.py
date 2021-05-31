@@ -47,7 +47,7 @@ class Member(Base):
 
     rooms=relationship(
         'Room',
-        secondary=RoomMember,
+        secondary='room_member',
         back_populates='members',
     )
 
@@ -70,17 +70,15 @@ class Message(Base):
 
 
 class Room(Base):
-    __tablename__ ='room'
+    __tablename__ = 'room'
 
-    id = Column(Integer, primary_key=True)
+    id = Column(Integer)
     title = Column(String)
-
-
 
 
     members=relationship(
         'Member',
-        secondary=RoomMember,
+        secondary='room_member',
         back_populates='rooms',
     )
 
