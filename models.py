@@ -21,7 +21,7 @@ Base = declarative_base()
 
 class RoomMember(Base):
     __tablename__ = 'room_member'
-
+    id = Column(Integer, primary_key=True, autoincrement=True)
     member_id= Column(Integer, ForeignKey('member.id')),
     room_id= Column(Integer, ForeignKey('room.id')),
 
@@ -72,7 +72,7 @@ class Message(Base):
 class Room(Base):
     __tablename__ = 'room'
 
-    id = Column(Integer)
+    id = Column(Integer, primary_key=True)
     title = Column(String)
 
 
