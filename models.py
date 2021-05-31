@@ -19,12 +19,12 @@ DBsession = Session()
 Base = declarative_base()
 
 
-room_member = Table(
-    'room_member',
-    Base.metadata,
-    Column('member_id', Integer, ForeignKey('member.memeber_id')),
-    Column('room_id', Integer, ForeignKey('room.room_id') ),
-)
+class room_member(Base):
+    __tablename__ = 'room_member'
+
+    member_id= Column(Integer, ForeignKey('member.member_id')),
+    room_id= Column(Integer, ForeignKey('room.room_id') ),
+
 
 
 class Member(Base):
@@ -47,7 +47,7 @@ class Member(Base):
 
     rooms=relationship(
         'Room',
-        secondary='room_member',
+        secondary=room_member,
         back_populates='members',
     )
 
