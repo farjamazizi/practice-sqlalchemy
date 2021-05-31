@@ -73,7 +73,6 @@ member2 = Member(
     user_name='username2',
     password='1375',
     birth_date=datetime.strptime('1997-02-02','%Y-%m-%d'),
-    fullname='firstname2 lastname2',
 )
 
 DBsession.add(member2)
@@ -84,7 +83,6 @@ member3 = Member(
     user_name='username3',
     password='1369',
     birth_date=datetime.strptime('1998-03-03','%Y-%m-%d'),
-    fullname='firstname3 lastname3',
 )
 
 DBsession.add(member3)
@@ -95,7 +93,6 @@ member4 = Member(
     user_name='firstname4lastname 4',
     password='1374',
     birth_date=datetime.strptime('1999-04-04','%Y-%m-%d'),
-    fullname='firstname4 lastname4',
 )
 
 DBsession.add(member4)
@@ -106,7 +103,6 @@ member5 = Member(
     user_name='username5',
     password='1390',
     birth_date=datetime.strptime('2000-05-05','%Y-%m-%d'),
-    fullname='firstname5 lastname5',
 )
 
 DBsession.add(member5)
@@ -117,7 +113,6 @@ member6 = Member(
     user_name='username6',
     password='1396',
     birth_date=datetime.strptime('2001-06-06','%Y-%m-%d'),
-    fullname='firstname6 lastname6'
 )
 
 DBsession.add(member6)
