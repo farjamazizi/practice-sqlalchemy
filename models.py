@@ -174,6 +174,8 @@ added_member_fullname = DBsession.query(Member) \
 
 print(added_member_fullname.fullname)
 
+print(member1.age)
+
 added_member_birth = DBsession.query(Member) \
     .filter(Member.user_name == member1.user_name) \
     .one_or_none()
