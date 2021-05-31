@@ -63,7 +63,6 @@ member1 = Member(
     user_name='username1',
     password='1370',
     birth_date=datetime.strptime('1996-01-01','%Y-%m-%d'),
-    fullname='firstname1 lastname1'
 )
 
 DBsession.add(member1)
@@ -168,11 +167,7 @@ message6 = Message(
 DBsession.add(message6)
 DBsession.commit()
 
-added_member_fullname = DBsession.query(Member) \
-    .filter(Member.user_name == member2.user_name) \
-    .one_or_none()
-
-print(added_member_fullname.fullname)
+print(member1.fullname)
 
 print(member1.age)
 
