@@ -57,7 +57,7 @@ class Member(Base):
 
 
 class Message(Base):
-    __tablename__ ='message'
+    __tablename__ = 'message'
 
     id = Column(Integer, primary_key=True, autoincrement=True)
     text = Column(Text)
