@@ -165,13 +165,13 @@ DBsession.commit()
 
 added_member_birth = DBsession.query(Member) \
     .filter(Member.user_name == member1.user_name) \
-    .first()
+    .one_or_none()
 
 print(added_member_birth.birth_date)
 
 added_member_fullname = DBsession.query(Member) \
     .filter(Member.user_name == member1.user_name) \
-    .first()
+    .one_or_none()
 
 print(added_member_fullname.fullname)
 
