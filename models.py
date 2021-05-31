@@ -1,3 +1,6 @@
+from datetime import date
+from datetime import datetime
+
 from sqlalchemy import Column, Integer, String, Text, ForeignKey, \
     Date, extract
 from sqlalchemy.ext.declarative import declarative_base
@@ -5,8 +8,6 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm import relationship
 from sqlalchemy.orm import column_property
-from datetime import date
-from datetime import datetime
 
 
 engine = create_engine('sqlite:///:memory:', echo=True)
@@ -26,7 +27,7 @@ class Member(Base):
     last_name = Column(String)
     user_name = Column(String, unique=True)
     password = Column(String)
-    birth_date = Column(Date, default=date.today())
+    birth_date = Column(Date)
     age = column_property(date.today().year - extract('year', birth_date))
     fullname = column_property(first_name + ' ' + last_name)
 
