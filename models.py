@@ -2,7 +2,7 @@ from datetime import date
 from datetime import datetime
 
 from sqlalchemy import Column, Integer, String, Text, ForeignKey, \
-    Date, extract
+    Date, extract, Table
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
@@ -19,6 +19,14 @@ DBsession = Session()
 Base = declarative_base()
 
 
+room_member = Table(
+    'room_member',
+    Base.metadata,
+    Column('member_id', Integer, ForeignKey('member.memeber_id')),
+    Column('room_id', Integer, ForeignKey('room.room_id') ),
+)
+
+
 class Member(Base):
     __tablename__ = 'member'
 
@@ -33,8 +41,14 @@ class Member(Base):
 
 
     messages = relationship(
-        "Message",
+        'Message',
         back_populates='sender'
+    )
+
+    rooms=relationship(
+        'Room',
+        secondary=room_member,
+        back_populates='members',
     )
 
     def __repr__(self):
@@ -43,7 +57,7 @@ class Member(Base):
 
 
 class Message(Base):
-    __tablename__ = 'message'
+    __tablename__ ='message'
 
     id = Column(Integer, primary_key=True, autoincrement=True)
     text = Column(Text)
@@ -52,6 +66,20 @@ class Message(Base):
     sender = relationship(
         'Member',
         back_populates='messages'
+    )
+
+
+class Room(Base):
+    __tablename__ ='room'
+
+    id = Column(Integer, primary_key=True)
+    title = Column(String)
+
+
+    members=relationship(
+        'Member',
+        secondary=room_member,
+        back_populates='rooms',
     )
 
 
@@ -117,6 +145,7 @@ member6 = Member(
 )
 
 DBsession.add(member6)
+DBsession.flush()
 
 # messages query
 
