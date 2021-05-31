@@ -162,15 +162,23 @@ message6 = Message(
 DBsession.add(message6)
 DBsession.commit()
 
-print(member1.fullname)
-
-print(member1.age)
-
 added_member_birth = DBsession.query(Member) \
+    .filter(Member.user_name == member1.user_name) \
+    .first()
+
+print(added_member_birth.birth_date)
+
+added_member_fullname = DBsession.query(Member) \
+    .filter(Member.user_name == member1.user_name) \
+    .first()
+
+print(added_member_fullname.fullname)
+
+added_member_age = DBsession.query(Member) \
     .filter(Member.user_name == member1.user_name) \
     .one_or_none()
 
-print(added_member_birth.birth_date)
+print(added_member_age.age)
 
 added_member = DBsession.query(Member) \
     .filter(Member.user_name == member1.user_name) \
