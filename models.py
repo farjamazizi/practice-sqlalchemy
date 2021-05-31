@@ -1,8 +1,13 @@
-from sqlalchemy import Column, Integer, String, Text, ForeignKey
+from datetime import date
+from datetime import datetime
+
+from sqlalchemy import Column, Integer, String, Text, ForeignKey, \
+    Date, extract
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm import relationship
+from sqlalchemy.orm import column_property
 
 
 engine = create_engine('sqlite:///:memory:', echo=True)
@@ -22,6 +27,10 @@ class Member(Base):
     last_name = Column(String)
     user_name = Column(String, unique=True)
     password = Column(String)
+    birth_date = Column(Date)
+    age = column_property(date.today().year - extract('year', birth_date))
+    fullname = column_property(first_name + ' ' + last_name)
+
 
     messages = relationship(
         "Message",
@@ -50,55 +59,61 @@ Base.metadata.create_all(engine)
 
 
 member1 = Member(
-    first_name='firstname 1',
-    last_name='lastname 1',
-    user_name='username 1',
+    first_name='firstname1',
+    last_name='lastname1',
+    user_name='username1',
     password='1370',
+    birth_date=datetime.strptime('1996-01-01','%Y-%m-%d'),
 )
 
 DBsession.add(member1)
 
 member2 = Member(
-    first_name='firstname 2',
-    last_name='lastname 2',
-    user_name='username 2',
+    first_name='firstname2',
+    last_name='lastname2',
+    user_name='username2',
     password='1375',
+    birth_date=datetime.strptime('1997-02-02','%Y-%m-%d'),
 )
 
 DBsession.add(member2)
 
 member3 = Member(
-    first_name='firstname 3',
-    last_name='lastname 3',
-    user_name='username 3',
+    first_name='firstname3',
+    last_name='lastname3',
+    user_name='username3',
     password='1369',
+    birth_date=datetime.strptime('1998-03-03','%Y-%m-%d'),
 )
 
 DBsession.add(member3)
 
 member4 = Member(
-    first_name='firstname 4',
-    last_name='lastname 4',
-    user_name='firstname 4lastname 4',
+    first_name='firstname4',
+    last_name='lastname4',
+    user_name='firstname4lastname 4',
     password='1374',
+    birth_date=datetime.strptime('1999-04-04','%Y-%m-%d'),
 )
 
 DBsession.add(member4)
 
 member5 = Member(
-    first_name='firstname 5',
-    last_name='lastname 5',
+    first_name='firstname5',
+    last_name='lastname5',
     user_name='username5',
     password='1390',
+    birth_date=datetime.strptime('2000-05-05','%Y-%m-%d'),
 )
 
 DBsession.add(member5)
 
 member6 = Member(
-    first_name='firstname 6',
-    last_name='lastname 6',
+    first_name='firstname6',
+    last_name='lastname6',
     user_name='username6',
     password='1396',
+    birth_date=datetime.strptime('2001-06-06','%Y-%m-%d'),
 )
 
 DBsession.add(member6)
@@ -148,6 +163,24 @@ message6 = Message(
 DBsession.add(message6)
 DBsession.commit()
 
+added_member_birth = DBsession.query(Member) \
+    .filter(Member.user_name == member1.user_name) \
+    .one_or_none()
+
+print(added_member_birth.birth_date)
+
+added_member_fullname = DBsession.query(Member) \
+    .filter(Member.user_name == member1.user_name) \
+    .one_or_none()
+
+print(added_member_fullname.fullname)
+
+added_member_age = DBsession.query(Member) \
+    .filter(Member.user_name == member1.user_name) \
+    .one_or_none()
+
+print(added_member_age.age)
+
 added_member = DBsession.query(Member) \
     .filter(Member.user_name == member1.user_name) \
     .one_or_none()
@@ -157,6 +190,7 @@ print(added_member.last_name)
 list_of_members = DBsession.query(Member)
 
 for member in list_of_members:
+
     print(member.user_name, member.last_name)
 
 added_of_members_ordered_by_names = DBsession.query(Member) \
@@ -164,7 +198,6 @@ added_of_members_ordered_by_names = DBsession.query(Member) \
     .all()
 
 for member in added_of_members_ordered_by_names:
-
     print(member.user_name)
 
 record = DBsession.query(Member) \
