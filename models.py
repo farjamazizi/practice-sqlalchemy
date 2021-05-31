@@ -2,7 +2,7 @@ from datetime import date
 from datetime import datetime
 
 from sqlalchemy import Column, Integer, String, Text, ForeignKey, \
-    Date, extract, Table
+    Date, extract
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
@@ -21,10 +21,9 @@ Base = declarative_base()
 
 class RoomMember(Base):
     __tablename__ = 'room_member'
-    id = Column(Integer, primary_key=True, autoincrement=True)
-    member_id= Column(Integer, ForeignKey('member.id')),
-    room_id= Column(Integer, ForeignKey('room.id')),
 
+    member_id= Column(Integer, ForeignKey('member.id'), primary_key=True)
+    room_id= Column(Integer, ForeignKey('room.id'), primary_key=True)
 
 
 class Member(Base):
