@@ -47,7 +47,7 @@ class Member(Base):
 
     rooms=relationship(
         'Room',
-        secondary=room_member,
+        secondary='room_member',
         back_populates='members',
     )
 
