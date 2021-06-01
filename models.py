@@ -239,24 +239,6 @@ room3_member1=RoomMember(
 
 DBsession.add(room3_member1)
 
-count_of_member_rooms = DBsession.query(RoomMember) \
-    .filter(RoomMember.room_id == room3.id) \
-    .count()
-
-print(count_of_member_rooms)
-
-count_of_room_members = DBsession.query(RoomMember) \
-    .filter(RoomMember.member_id == member1.id) \
-    .count()
-
-print(count_of_room_members)
-
-added_room_members = DBsession.query(Room) \
-    .filter(Room.title == room1.title) \
-    .one_or_none()
-
-print(added_room_members.members)
-
 added_member_birth = DBsession.query(Member) \
     .filter(Member.user_name == member1.user_name) \
     .one_or_none()
@@ -338,4 +320,22 @@ count_message_of_member6 = DBsession.query(Message) \
     .count()
 
 print(count_message_of_member6)
+
+count_of_member_rooms = DBsession.query(RoomMember) \
+    .filter(RoomMember.room_id == room3.id) \
+    .count()
+
+print(count_of_member_rooms)
+
+count_of_room_members = DBsession.query(RoomMember) \
+    .filter(RoomMember.member_id == member1.id) \
+    .count()
+
+print(count_of_room_members)
+
+added_room_members = DBsession.query(Room) \
+    .filter(Room.title == room1.title) \
+    .one_or_none()
+
+print(added_room_members.members)
 
