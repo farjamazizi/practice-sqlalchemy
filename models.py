@@ -62,6 +62,8 @@ class Message(Base):
     text = Column(Text)
     sender_id = Column(Integer, ForeignKey('member.id'))
     room = relationship('Room', back_populates='messages')
+    room_id = Column(Integer, ForeignKey('room.id'))
+
 
     sender = relationship(
         'Member',
@@ -74,7 +76,6 @@ class Room(Base):
 
     id = Column(Integer, primary_key=True)
     title = Column(String)
-    message_id = Column(Integer, ForeignKey('message.id'))
     messages = relationship('Message', back_populates='room')
 
 
@@ -168,12 +169,14 @@ room3= Room(
 )
 
 DBsession.add(room3)
+DBsession.flush()
 
 # messages query
 
 message1 = Message(
      text='Hello world',
      sender_id=member1.id,
+     room_id=room1.id,
 )
 
 DBsession.add(message1)
@@ -181,6 +184,7 @@ DBsession.add(message1)
 message2 = Message(
     text='Hello python',
     sender_id=member2.id,
+    room_id=room1.id,
 )
 
 DBsession.add(message2)
@@ -323,6 +327,12 @@ count_message_of_member6 = DBsession.query(Message) \
     .count()
 
 print(count_message_of_member6)
+
+count_message_of_rooms = DBsession.query(Message) \
+    .filter(Message.room_id == room1.id) \
+    .count()
+
+print(count_message_of_rooms)
 
 count_of_member_rooms = DBsession.query(RoomMember) \
     .filter(RoomMember.room_id == room3.id) \
