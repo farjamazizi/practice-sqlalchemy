@@ -189,7 +189,60 @@ message6 = Message(
 )
 
 DBsession.add(message6)
+
+# room instance
+
+room1= Room(
+    title='room1',
+)
+
+DBsession.add(room1)
+
+room2= Room(
+    title='room2',
+)
+
+DBsession.add(room2)
+
+room3= Room(
+    title='room3',
+)
+
+DBsession.add(room3)
 DBsession.commit()
+
+room1_member1=RoomMember(
+    room_id=room1.id,
+    member_id=member1.id,
+)
+
+DBsession.add(room1_member1)
+
+room2_member1=RoomMember(
+    room_id=room2.id,
+    member_id=member1.id,
+)
+
+DBsession.add(room2_member1)
+
+room3_member2=RoomMember(
+    room_id=room3.id,
+    member_id=member2.id,
+)
+
+DBsession.add(room3_member2)
+
+count_of_room_members = DBsession.query(RoomMember) \
+    .filter(RoomMember.member_id == member1.id) \
+    .count()
+
+print(count_of_room_members)
+
+added_room_members = DBsession.query(Room) \
+    .filter(Room.title == room1.title) \
+    .one_or_none()
+
+print(added_room_members.members)
 
 added_member_birth = DBsession.query(Member) \
     .filter(Member.user_name == member1.user_name) \
@@ -218,7 +271,6 @@ print(added_member.last_name)
 list_of_members = DBsession.query(Member)
 
 for member in list_of_members:
-
     print(member.user_name, member.last_name)
 
 added_of_members_ordered_by_names = DBsession.query(Member) \
