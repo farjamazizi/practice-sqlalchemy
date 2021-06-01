@@ -232,6 +232,19 @@ room3_member2=RoomMember(
 
 DBsession.add(room3_member2)
 
+room3_member1=RoomMember(
+    room_id=room3.id,
+    member_id=member1.id,
+)
+
+DBsession.add(room3_member1)
+
+count_of_member_rooms = DBsession.query(RoomMember) \
+    .filter(RoomMember.room_id == room3.id) \
+    .count()
+
+print(count_of_member_rooms)
+
 count_of_room_members = DBsession.query(RoomMember) \
     .filter(RoomMember.member_id == member1.id) \
     .count()
