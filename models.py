@@ -146,6 +146,26 @@ member6 = Member(
 DBsession.add(member6)
 DBsession.flush()
 
+# room instance
+
+room1= Room(
+    title='room1',
+)
+
+DBsession.add(room1)
+
+room2= Room(
+    title='room2',
+)
+
+DBsession.add(room2)
+
+room3= Room(
+    title='room3',
+)
+
+DBsession.add(room3)
+
 # messages query
 
 message1 = Message(
@@ -189,26 +209,6 @@ message6 = Message(
 )
 
 DBsession.add(message6)
-
-# room instance
-
-room1= Room(
-    title='room1',
-)
-
-DBsession.add(room1)
-
-room2= Room(
-    title='room2',
-)
-
-DBsession.add(room2)
-
-room3= Room(
-    title='room3',
-)
-
-DBsession.add(room3)
 DBsession.commit()
 
 room1_member1=RoomMember(
