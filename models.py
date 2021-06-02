@@ -38,7 +38,6 @@ class Member(Base):
     age = column_property(date.today().year - extract('year', birth_date))
     fullname = column_property(first_name + ' ' + last_name)
 
-
     messages = relationship(
         'Message',
         back_populates='sender'
@@ -64,10 +63,9 @@ class Message(Base):
     room = relationship('Room', back_populates='messages')
     room_id = Column(Integer, ForeignKey('room.id'))
 
-
     sender = relationship(
         'Member',
-        back_populates='messages'
+        back_populates='messages',
     )
 
 
@@ -77,7 +75,6 @@ class Room(Base):
     id = Column(Integer, primary_key=True)
     title = Column(String)
     messages = relationship('Message', back_populates='room')
-
 
     members=relationship(
         'Member',
@@ -192,6 +189,7 @@ DBsession.add(message2)
 message3 = Message(
     text='Hello pycharm',
     sender_id=member2.id,
+    room_id=room2.id,
 )
 
 DBsession.add(message3)
@@ -199,6 +197,7 @@ DBsession.add(message3)
 message4 = Message(
     text='notebook',
     sender_id=member5.id,
+    room_id=room2.id,
 )
 
 DBsession.add(message4)
@@ -206,6 +205,7 @@ DBsession.add(message4)
 message5 = Message(
     text='pencil',
     sender_id=member5.id,
+    room_id=room2.id,
 )
 
 DBsession.add(message5)
@@ -213,6 +213,7 @@ DBsession.add(message5)
 message6 = Message(
     text='book',
     sender_id=member6.id,
+    room_id=room3.id,
 )
 
 DBsession.add(message6)
