@@ -60,8 +60,12 @@ class Message(Base):
     id = Column(Integer, primary_key=True, autoincrement=True)
     text = Column(Text)
     sender_id = Column(Integer, ForeignKey('member.id'))
-    room = relationship('Room', back_populates='messages')
     room_id = Column(Integer, ForeignKey('room.id'))
+
+    room = relationship(
+        'Room',
+        back_populates='messages',
+    )
 
     sender = relationship(
         'Member',
@@ -74,7 +78,11 @@ class Room(Base):
 
     id = Column(Integer, primary_key=True)
     title = Column(String)
-    messages = relationship('Message', back_populates='room')
+
+    messages = relationship(
+        'Message',
+        back_populates='room',
+    )
 
     members=relationship(
         'Member',
