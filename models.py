@@ -41,7 +41,6 @@ class Member(Base):
         'Message',
         back_populates='sender',
     )
-
     rooms=relationship(
         'Room',
         secondary='room_member',
@@ -65,7 +64,6 @@ class Message(Base):
         'Room',
         back_populates='messages',
     )
-
     sender = relationship(
         'Member',
         back_populates='messages',
@@ -82,7 +80,6 @@ class Room(Base):
         'Message',
         back_populates='room',
     )
-
     members=relationship(
         'Member',
         secondary='room_member',
