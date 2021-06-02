@@ -40,7 +40,7 @@ class Member(Base):
 
     messages = relationship(
         'Message',
-        back_populates='sender'
+        back_populates='sender',
     )
 
     rooms=relationship(
