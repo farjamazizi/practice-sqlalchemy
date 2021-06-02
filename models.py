@@ -1,4 +1,5 @@
-from datetime import date, datetime
+from datetime import date
+from datetime import datetime
 
 from sqlalchemy import Column, Integer, String, Text, ForeignKey, \
     Date, extract
@@ -170,7 +171,7 @@ room3= Room(
 )
 
 DBsession.add(room3)
-DBsession.flush()
+#DBsession.flush()
 
 # messages query
 
