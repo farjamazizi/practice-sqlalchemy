@@ -292,6 +292,13 @@ room3_admin2=RoomAdmin(
 
 DBsession.add(room3_admin2)
 
+room3_admin3=RoomAdmin(
+    room_id=room3.id,
+    admin_id=member3.id,
+)
+
+DBsession.add(room3_admin3)
+
 added_member_birth = DBsession.query(Member) \
     .filter(Member.user_name == member1.user_name) \
     .one_or_none()
