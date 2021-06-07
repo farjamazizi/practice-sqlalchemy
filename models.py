@@ -19,6 +19,13 @@ DBsession = Session()
 Base = declarative_base()
 
 
+class RoomMember(Base):
+    __tablename__ = 'room_member'
+
+    member_id= Column(Integer, ForeignKey('member.id'), primary_key=True)
+    room_id= Column(Integer, ForeignKey('room.id'), primary_key=True)
+
+
 class Member(Base):
     __tablename__ = 'member'
 
@@ -31,10 +38,14 @@ class Member(Base):
     age = column_property(date.today().year - extract('year', birth_date))
     fullname = column_property(first_name + ' ' + last_name)
 
-
     messages = relationship(
-        "Message",
-        back_populates='sender'
+        'Message',
+        back_populates='sender',
+    )
+    rooms=relationship(
+        'Room',
+        secondary='room_member',
+        back_populates='members',
     )
 
     def __repr__(self):
@@ -48,10 +59,32 @@ class Message(Base):
     id = Column(Integer, primary_key=True, autoincrement=True)
     text = Column(Text)
     sender_id = Column(Integer, ForeignKey('member.id'))
+    room_id = Column(Integer, ForeignKey('room.id'))
 
+    room = relationship(
+        'Room',
+        back_populates='messages',
+    )
     sender = relationship(
         'Member',
-        back_populates='messages'
+        back_populates='messages',
+    )
+
+
+class Room(Base):
+    __tablename__ = 'room'
+
+    id = Column(Integer, primary_key=True)
+    title = Column(String)
+
+    messages = relationship(
+        'Message',
+        back_populates='room',
+    )
+    members=relationship(
+        'Member',
+        secondary='room_member',
+        back_populates='rooms',
     )
 
 
@@ -117,12 +150,35 @@ member6 = Member(
 )
 
 DBsession.add(member6)
+DBsession.flush()
+
+# room instance
+
+room1= Room(
+    title='room1',
+)
+
+DBsession.add(room1)
+
+room2= Room(
+    title='room2',
+)
+
+DBsession.add(room2)
+
+room3= Room(
+    title='room3',
+)
+
+DBsession.add(room3)
+#DBsession.flush()
 
 # messages query
 
 message1 = Message(
      text='Hello world',
      sender_id=member1.id,
+     room_id=room1.id,
 )
 
 DBsession.add(message1)
@@ -130,6 +186,7 @@ DBsession.add(message1)
 message2 = Message(
     text='Hello python',
     sender_id=member2.id,
+    room_id=room1.id,
 )
 
 DBsession.add(message2)
@@ -137,6 +194,7 @@ DBsession.add(message2)
 message3 = Message(
     text='Hello pycharm',
     sender_id=member2.id,
+    room_id=room2.id,
 )
 
 DBsession.add(message3)
@@ -144,6 +202,7 @@ DBsession.add(message3)
 message4 = Message(
     text='notebook',
     sender_id=member5.id,
+    room_id=room2.id,
 )
 
 DBsession.add(message4)
@@ -151,6 +210,7 @@ DBsession.add(message4)
 message5 = Message(
     text='pencil',
     sender_id=member5.id,
+    room_id=room2.id,
 )
 
 DBsession.add(message5)
@@ -158,10 +218,39 @@ DBsession.add(message5)
 message6 = Message(
     text='book',
     sender_id=member6.id,
+    room_id=room3.id,
 )
 
 DBsession.add(message6)
 DBsession.commit()
+
+room1_member1=RoomMember(
+    room_id=room1.id,
+    member_id=member1.id,
+)
+
+DBsession.add(room1_member1)
+
+room2_member1=RoomMember(
+    room_id=room2.id,
+    member_id=member1.id,
+)
+
+DBsession.add(room2_member1)
+
+room3_member2=RoomMember(
+    room_id=room3.id,
+    member_id=member2.id,
+)
+
+DBsession.add(room3_member2)
+
+room3_member1=RoomMember(
+    room_id=room3.id,
+    member_id=member1.id,
+)
+
+DBsession.add(room3_member1)
 
 added_member_birth = DBsession.query(Member) \
     .filter(Member.user_name == member1.user_name) \
@@ -190,7 +279,6 @@ print(added_member.last_name)
 list_of_members = DBsession.query(Member)
 
 for member in list_of_members:
-
     print(member.user_name, member.last_name)
 
 added_of_members_ordered_by_names = DBsession.query(Member) \
@@ -245,4 +333,28 @@ count_message_of_member6 = DBsession.query(Message) \
     .count()
 
 print(count_message_of_member6)
+
+count_message_of_rooms = DBsession.query(Message) \
+    .filter(Message.room_id == room1.id) \
+    .count()
+
+print(count_message_of_rooms)
+
+count_of_member_rooms = DBsession.query(RoomMember) \
+    .filter(RoomMember.room_id == room3.id) \
+    .count()
+
+print(count_of_member_rooms)
+
+count_of_room_members = DBsession.query(RoomMember) \
+    .filter(RoomMember.member_id == member1.id) \
+    .count()
+
+print(count_of_room_members)
+
+added_room_members = DBsession.query(Room) \
+    .filter(Room.title == room1.title) \
+    .one_or_none()
+
+print(added_room_members.members)
 
