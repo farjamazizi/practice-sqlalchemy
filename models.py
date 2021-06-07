@@ -26,6 +26,13 @@ class RoomMember(Base):
     room_id= Column(Integer, ForeignKey('room.id'), primary_key=True)
 
 
+class RoomAdmin(Base):
+    __tablename__ = 'room_admin'
+
+    admin_id= Column(Integer, ForeignKey('member.id'), primary_key=True)
+    room_id= Column(Integer, ForeignKey('room.id'), primary_key=True)
+
+
 class Member(Base):
     __tablename__ = 'member'
 
@@ -46,6 +53,12 @@ class Member(Base):
         'Room',
         secondary='room_member',
         back_populates='members',
+    )
+
+    admin_rooms = relationship(
+        'Room',
+        secondary='room_admin',
+        back_populates='admins',
     )
 
     def __repr__(self):
@@ -85,6 +98,12 @@ class Room(Base):
         'Member',
         secondary='room_member',
         back_populates='rooms',
+    )
+
+    admins = relationship(
+        'Member',
+        secondary='room_admin',
+        back_populates='admin_rooms',
     )
 
 
@@ -252,6 +271,34 @@ room3_member1=RoomMember(
 
 DBsession.add(room3_member1)
 
+room1_admin1=RoomAdmin(
+    room_id=room1.id,
+    admin_id=member1.id,
+)
+
+DBsession.add(room1_admin1)
+
+room2_admin1=RoomAdmin(
+    room_id=room2.id,
+    admin_id=member1.id,
+)
+
+DBsession.add(room2_admin1)
+
+room3_admin2=RoomAdmin(
+    room_id=room3.id,
+    admin_id=member2.id,
+)
+
+DBsession.add(room3_admin2)
+
+room3_admin3=RoomAdmin(
+    room_id=room3.id,
+    admin_id=member3.id,
+)
+
+DBsession.add(room3_admin3)
+
 added_member_birth = DBsession.query(Member) \
     .filter(Member.user_name == member1.user_name) \
     .one_or_none()
@@ -357,4 +404,16 @@ added_room_members = DBsession.query(Room) \
     .one_or_none()
 
 print(added_room_members.members)
+
+count_of_room_admins = DBsession.query(RoomAdmin) \
+    .filter(RoomAdmin.admin_id == member1.id) \
+    .count()
+
+print(count_of_room_admins)
+
+count_of_admin_rooms = DBsession.query(RoomAdmin) \
+    .filter(RoomAdmin.room_id == room3.id) \
+    .count()
+
+print(count_of_admin_rooms)
 
