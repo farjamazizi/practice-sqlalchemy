@@ -26,6 +26,13 @@ class RoomMember(Base):
     room_id= Column(Integer, ForeignKey('room.id'), primary_key=True)
 
 
+class RoomAdmin(Base):
+    __tablename__ = 'room_admin'
+
+    member_id= Column(Integer, ForeignKey('member.id'), primary_key=True)
+    room_id= Column(Integer, ForeignKey('room.id'), primary_key=True)
+
+
 class Member(Base):
     __tablename__ = 'member'
 
@@ -46,6 +53,12 @@ class Member(Base):
         'Room',
         secondary='room_member',
         back_populates='members',
+    )
+
+    adminrooms = relationship(
+        'Room',
+        secondary='room_admin',
+        back_populates='admins',
     )
 
     def __repr__(self):
@@ -85,6 +98,12 @@ class Room(Base):
         'Member',
         secondary='room_member',
         back_populates='rooms',
+    )
+
+    admins = relationship(
+        'Member',
+        secondary='room_admin',
+        back_populates='adminrooms',
     )
 
 
